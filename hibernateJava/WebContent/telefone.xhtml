@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+
+<h:body>
+	<form>
+		<h:link value="Pagina JSF" outcome="index.jsf" />
+		<br />
+		<h:link value="Pagina PrimeFaces" outcome="PrimeFaces.jsf" />
+	</form>
+
+	<h:form id="formulario">
+		<h:messages showDetail="true" showSummary="false" id="msg" />
+
+		<h:panelGrid columns="2">
+			<h:outputLabel>Usuario: </h:outputLabel>
+			<h:outputText value="#{telefoneManagedBean.usuario.nome}" />
+
+			<h:outputLabel>Numero:</h:outputLabel>
+			<h:inputText value="#{telefoneManagedBean.telefone.numero}" />
+
+			<h:outputLabel>Tipo:</h:outputLabel>
+			<h:inputText value="#{telefoneManagedBean.telefone.tipo}" />
+		</h:panelGrid>
+		<br />
+		<br />
+		<br />
+		<h:commandButton value="Salvar" action="#{telefoneManagedBean.salvar}"></h:commandButton>
+	</h:form>
+	<h:form id="formularioTelefones">
+
+		<h:dataTable value="#{telefoneManagedBean.usuario.telefone}"
+			var="fone" cellpadding="15" border="1">
+			<f:facet name="header">Lista de Telefones</f:facet>
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputLabel value="#{fone.id}"></h:outputLabel>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Numero</f:facet>
+				<h:outputLabel value="#{fone.numero}"></h:outputLabel>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Numero</f:facet>
+				<h:outputLabel value="#{fone.tipo}"></h:outputLabel>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Deletar</f:facet>
+				
+				<h:commandLink immediate="true"
+					action="#{telefoneManagedBean.removeTelefone}" id="botaoremover">
+					<h:graphicImage url="resources/img/icone.png" width="25"
+						height="25" />
+					<f:setPropertyActionListener value="#{fone}"
+						target="#{telefoneManagedBean.telefone}"></f:setPropertyActionListener>
+						<f:ajax execute="botaoremover" render="@form :formulario:msg"/>
+				</h:commandLink>
+				
+			</h:column>
+			
+		</h:dataTable>
+	</h:form>
+
+</h:body>
+
+
+
+</html>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+
+<h:body>
+<p:steps>
+    <p:menuitem value="Personal" />
+    <p:menuitem value="Seat Selection" />
+    <p:menuitem value="Payment" />
+    <p:menuitem value="Confirmation" />
+</p:steps>
+ 
+<h3>Interactive</h3>
+<p:steps activeIndex="1" styleClass="custom" readonly="false">
+    <p:menuitem value="Personal" url="#"/>
+    <p:menuitem value="Seat Selection" url="#"/>
+    <p:menuitem value="Payment" url="#"/>
+    <p:menuitem value="Confirmation" url="#"/>
+</p:steps>
+	<h:form id="formulario">
+		<p:messages autoUpdate="true" showDetail="true" />
+		<br />
+		<p:panelGrid columns="2">
+
+			<p:outputLabel>ID:</p:outputLabel>
+			<p:inputText readonly="true" value="#{UsuarioManagedBean.usuario.id}" />
+
+			<p:outputLabel>Nome:</p:outputLabel>
+			<p:inputText value="#{UsuarioManagedBean.usuario.nome}"
+				required="true" requiredMessage="Nome é obrigatorio" />
+
+			<p:outputLabel>Sobrenome:</p:outputLabel>
+			<p:inputText value="#{UsuarioManagedBean.usuario.sobrenome}" />
+
+			<p:outputLabel>Idade:</p:outputLabel>
+			<p:inputText value="#{UsuarioManagedBean.usuario.idade}" />
+
+			<p:outputLabel>Sexo</p:outputLabel>
+			<p:selectOneMenu value="#{UsuarioManagedBean.usuario.sexo}">
+				<f:selectItem itemValue="Masculino" itemLabel="Masculino" />
+				<f:selectItem itemValue="Feminino" itemLabel="Feminino" />
+			</p:selectOneMenu>
+
+             <p:outputLabel>Salario</p:outputLabel>
+             <p:inputText value="#{UsuarioManagedBean.usuario.salario}"/>
+   
+   
+			<p:outputLabel>Email:</p:outputLabel>
+			<p:inputText value="#{UsuarioManagedBean.usuario.email}" />
+
+			<p:outputLabel>Login:</p:outputLabel>
+			<p:inputText value="#{UsuarioManagedBean.usuario.login}" />
+
+			<p:outputLabel>Senha:</p:outputLabel>
+			<p:password value="#{UsuarioManagedBean.usuario.senha}" />
+
+		</p:panelGrid>
+
+		<br />
+		<br />
+
+		<p:commandButton value="Salvar" ajax="false"
+			action="#{UsuarioManagedBean.salvar}" />
+
+		<p:commandButton value="Novo" immediate="true" ajax="false"
+			action="#{UsuarioManagedBean.novo}">
+			<f:ajax execute="@this" render="@form"/>
+		</p:commandButton>
+	</h:form>
+
+	<br />
+	<br />
+
+	<h:form id="tabela">
+
+		<p:dataTable value="#{UsuarioManagedBean.list}" var="user">
+
+			<p:column headerText="Identificação">
+				<h:outputText value="#{user.id}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{user.nome}" />
+			</p:column>
+
+			<p:column headerText="Sobrenome">
+				<h:outputText value="#{user.sobrenome}" />
+			</p:column>
+
+			<p:column headerText="idade">
+				<h:outputText value="#{user.idade}" />
+			</p:column>
+			
+			<p:column ></p:column>
+
+			<p:column headerText="Login">
+				<h:outputText value="#{user.login}" />
+			</p:column>
+
+			<p:column headerText="Editar">
+				<h:commandLink value="Editar" immediate="true" id="botaoeditar">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{UsuarioManagedBean.usuario}" />
+					<f:ajax execute="botaoeditar" render=":formulario" />
+				</h:commandLink>
+			</p:column>
+
+			<p:column headerText="Remover" id="botaoremover">
+				<h:commandLink value="Remover"
+					action="#{UsuarioManagedBean.remover}">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{UsuarioManagedBean.usuario}" />
+					<f:ajax execute="botaoremover" render="@form"></f:ajax>
+				</h:commandLink>
+			</p:column>
+			
+			<p:column headerText="Telefones" >
+				<h:commandLink immediate="true"
+					action="telefonePrimeFaces.jsf" id="botaotelefone">
+					<h:graphicImage url="resources/img/cellfone.png" width="25"
+						height="25" />
+					  <f:param name="codigousuario" value="#{user.id}"/>
+				</h:commandLink>
+			</p:column>
+		</p:dataTable>
+
+	</h:form>
+
+ <p:chart type="bar" model="#{UsuarioManagedBean.barCharModel}"/>
+</h:body>
+
+</html>

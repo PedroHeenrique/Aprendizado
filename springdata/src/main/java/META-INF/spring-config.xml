@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns = "http://www.springframework.org/shema/beans"
+ 	  xmlns:xsi= "http://www.w3.org/2001/XMLShema-instance"
+ 	  xmlns:context="http://www.springframework.org/schema/context"
+ 	  xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+ 	  xsi:schemaLocation= "
+ 	  		http://www.springframawork.org/schema/beans> 
+ 	 		http://www.springframawork.org/schema/beans/spring-beans-3.0.xsd
+ 	  		http://www.springframawork.org/schema/context
+ 	  		http://www.springframawork.org/schema/context/spring-context-3.0.xsd
+ 	  		http://www.springframawork.org/schema/data/jpa
+ 	  		http://www.springframawork.org/schema/data/jpa/spring-jpa.xsd"
+ 	 default-lazy-init="True"> 
+ 
+ 	 <context:annotation-config/>
+ 	 
+ 	 <context:component-scan base-packge="springdata.modelo"/>
+ 	 <jpa:repositories base-package="springdata.dao"/>
+ 	 <!--Definir conexao com o banco de dados  -->>
+ 	 
+ 	 <bean id="dataSource" class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	   <property name= "driverClassName" value=	"oracle.jdbc.driver.OracleDriver"/>
+ 	   <property name= "url" value
+ 	 </bean>
+      
+</beans>
